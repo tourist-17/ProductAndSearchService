@@ -1,5 +1,5 @@
 const { Category } = require("../models/index");
-
+const { Op } = require("sequelize");
 class CategoryRepository {
   async createCategory({ name }) {
     try {
@@ -26,14 +26,14 @@ class CategoryRepository {
   async updateCategory(categoryId, data) {
     // data is object {name : "Electronics"}
     try {
-    //   const category = await Category.update(data, {
-    //     where: {
-    //       id: categoryId,
-    //     },
-    //   });
-    const category = await Category.findByPk(categoryId);
-    category.name = data.name;
-    await category.save();
+      //   const category = await Category.update(data, {
+      //     where: {
+      //       id: categoryId,
+      //     },
+      //   });
+      const category = await Category.findByPk(categoryId);
+      category.name = data.name;
+      await category.save();
       return category;
     } catch (error) {
       console.log("Something went wrong in the repository layer");
