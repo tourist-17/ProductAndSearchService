@@ -1,4 +1,4 @@
-const { Category } = require("../models/index");
+const { Category } = require("../models/index.js");
 const { Op } = require("sequelize");
 class CategoryRepository {
   async createCategory({ name }) {

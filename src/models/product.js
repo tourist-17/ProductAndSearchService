@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.category, {
+      this.belongsTo(models.Category, {
         foreignKey: "CategoryId",
         onDelete: "CASCADE", // when we delete a category then all products that belongs to that category will automatically deleted 
       });

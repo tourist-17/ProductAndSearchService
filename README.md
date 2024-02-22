@@ -48,3 +48,11 @@
 
 
  -A product belongs to a category but one category have many products
+
+ ## Tables
+
+ ### Category -> id, name , created_at, updated_at
+ ### Product -> id, name, description, available_offer, quantity, rating, brand, price, category_id, created_at, updated_at
+
+Relationship -> category has many produxts and product belongs to a category (one to many)
+

@@ -1,17 +1,13 @@
-const { CategoryService } = require("../services/index");
-const categoryService = new CategoryService();
-/**
- * POST
- * data -> req.body
- */
-// console.log('ad jk');
+const { ProductService } = require("../services/index");
+
+const productService = new ProductService();
 const create = async (req, res) => {
   try {
-    const category = await categoryService.createCategory(req.body);
+    const response = await productService.create(req.body);
     return res.status(201).json({
-      data: category,
+      data: response,
+      message: "Successfully created the product",
       success: true,
-      message: "Successfully created a category",
       err: {},
     });
   } catch (error) {
@@ -19,44 +15,42 @@ const create = async (req, res) => {
     return res.status(500).json({
       data: {},
       success: false,
-      message: "Not able to create a category",
+      err: error,
+      message: "Cannot create a new product",
+    });
+  }
+};
+
+// DELETE -> /product/:id
+// so you will get id in request params
+const destroy = async (req, res) => {
+  try {
+    await productService.destroy(req.params.id);
+    return res.status(200).json({
+      data: [1],
+      success: true,
+      message: "Successfully deleted a product",
+      err: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Not able to delete the product",
       err: error,
     });
   }
 };
 
-// DELETE -> /category/:id
-// so you will get id in request params
-const destroy = async (req, res) => {
-  try {
-    await categoryService.deleteCategory(req.params.id);
-    return res.status(200).json({
-      data: [1],
-      success: true,
-      message: "Successfully deleted a category",
-      err: {},
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      data: {},
-      success: false,
-      message: "Not able to delete the category",
-      err: error,
-    });
-  }
-};
-// PATCH ->/category/:id -> req.body
+// PATCH ->/product/:id -> req.body
 const update = async (req, res) => {
   try {
-    const category = await categoryService.updateCategory(
-      req.params.id,
-      req.body
-    );
+    const product = await productService.update(req.params.id, req.body);
     return res.status(200).json({
-      data: category,
+      data: product,
       success: true,
-      message: "Successfully updated a category",
+      message: "Successfully updated a product",
       err: {},
     });
   } catch (error) {
@@ -64,19 +58,20 @@ const update = async (req, res) => {
     return res.status(500).json({
       data: {},
       success: false,
-      message: "Not able to update the category",
+      message: "Not able to update the product",
       err: error,
     });
   }
 };
-// GET -> category/:id
+
+// GET -> product/:id
 const get = async (req, res) => {
   try {
-    const response = await categoryService.getCategory(req.params.id);
+    const response = await productService.get(req.params.id);
     return res.status(200).json({
       data: response,
       success: true,
-      message: "Successfully fetched a category",
+      message: "Successfully fetched a product",
       err: {},
     });
   } catch (error) {
@@ -84,19 +79,20 @@ const get = async (req, res) => {
     return res.status(500).json({
       data: {},
       success: false,
-      message: "Not able to fetch the category",
+      message: "Not able to fetch the product",
       err: error,
     });
   }
 };
 
 const getAll = async (req, res) => {
+  // with or without filter
   try {
-    const categories = await categoryService.getAllCategories(req.query);
+    const products = await productService.getAll(req.query);
     return res.status(200).json({
-      data: categories,
+      data: products,
       success: true,
-      message: "Successfully fetched filtered categories",
+      message: "Successfully fetched filtered products",
       err: {},
     });
   } catch (error) {
@@ -104,7 +100,7 @@ const getAll = async (req, res) => {
     return res.status(500).json({
       data: {},
       success: false,
-      message: "Not able to fetch the categories",
+      message: "Not able to fetch the products",
       err: error,
     });
   }
